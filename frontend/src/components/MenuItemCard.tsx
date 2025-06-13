@@ -4,7 +4,7 @@ import type { CartItem } from "../context/CartContext";
 
 type Props = {
   item: {
-    id: string;
+    id: number;
     name: string;
     price: number;
     description?: string;

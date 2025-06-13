@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllOrders } from "../api/orders";
+import { fetchAllOrders, completeOrder } from "../api/orders";
 import OrderCard from "../components/OrderCard";
 
 type Order = {
@@ -17,7 +17,7 @@ const BarDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchOrders();
-    const interval = setInterval(fetchOrders, 10_000); // 10 seconds
+    const interval = setInterval(fetchOrders, 100_000); // 10 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -25,9 +25,12 @@ const BarDashboard: React.FC = () => {
     try {
       setLoading(true);
       const data = await fetchAllOrders();
+      console.log('Raw orders data:', data);
       // Split orders into active and completed
       const active = data.filter((order: Order) => order.status === 'active');
       const completed = data.filter((order: Order) => order.status === 'completed');
+      console.log('Active orders:', active);
+      console.log('Completed orders:', completed);
       setActiveOrders(active);
       setCompletedOrders(completed);
     } catch (err) {
@@ -39,13 +42,9 @@ const BarDashboard: React.FC = () => {
 
   const handleComplete = async (orderId: string) => {
     try {
-      // TODO: Implement order completion API call
-      // For now, just move the order to completed
-      const orderToComplete = activeOrders.find(order => order.id === orderId);
-      if (orderToComplete) {
-        setActiveOrders(activeOrders.filter(order => order.id !== orderId));
-        setCompletedOrders([...completedOrders, { ...orderToComplete, status: 'completed' }]);
-      }
+      await completeOrder(orderId);
+      // Refresh orders to get the updated status
+      await fetchOrders();
     } catch (err) {
       console.error("Failed to complete order", err);
     }

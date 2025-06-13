@@ -18,6 +18,8 @@ const CartPage: React.FC = () => {
         itemId: item.itemId,
         quantity: item.quantity,
       }));
+
+      console.log(simplifiedItems);
   
       await submitOrder("42", simplifiedItems);
   

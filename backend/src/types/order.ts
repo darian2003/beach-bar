@@ -5,7 +5,10 @@ export interface OrderItem {
   
   export interface CreateOrderRequest {
     umbrellaId: number;
-    items: OrderItem[];
+    items: {
+      itemId: string;
+      quantity: number;
+    }[];
   }
 
   export interface Order {

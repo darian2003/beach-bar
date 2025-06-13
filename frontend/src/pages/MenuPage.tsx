@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 
 interface MenuItem {
-  id: string;
+  id: number;
   name: string;
   price: number;
 }

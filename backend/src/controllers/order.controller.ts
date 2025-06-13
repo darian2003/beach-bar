@@ -19,14 +19,14 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
     await client.query("BEGIN");
 
     await client.query(
-      `INSERT INTO orders (id, umbrella_id, status) VALUES ($1, $2, 'new')`,
+      `INSERT INTO orders (id, umbrella_id, status) VALUES ($1, $2, 'active')`,
       [orderId, umbrellaId]
     );
 
     for (const item of items) {
       await client.query(
         `INSERT INTO order_items (order_id, item_id, quantity) VALUES ($1, $2, $3)`,
-        [orderId, item.id, item.quantity]
+        [orderId, item.itemId, item.quantity]
       );
     }
 
@@ -35,7 +35,7 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
     res.status(201).json({
       message: "Order created",
       orderId,
-      status: "new"
+      status: "active"
     });
   } catch (error) {
     await client.query("ROLLBACK");
@@ -47,36 +47,33 @@ export const createOrder = async (req: Request, res: Response): Promise<void> =>
 };
 
 export const getAllOrders = async (req: Request, res: Response): Promise<void> => {
-
-  const status = req.query.status as string;
-  const validStatuses = ["new", "preparing", "delivered"];
-  const useFilter = status && (validStatuses.includes(status));
-
   try {
     const query = `
       SELECT
         o.id,
-        o.umbrella_id AS umbrellaId,
-        o.status,
-        o.timestamp,
+        o.umbrella_id AS "umbrellaId",
+        CASE 
+          WHEN o.status IN ('new', 'preparing') THEN 'active'
+          WHEN o.status = 'delivered' THEN 'completed'
+          ELSE o.status
+        END as status,
+        o.timestamp AS "createdAt",
         json_agg(
           json_build_object(
-            'itemId', oi.item_id, 
+            'name', mi.name,
             'quantity', oi.quantity
           )
         ) AS items
-        FROM orders o
-        JOIN order_items oi ON o.id = oi.order_id
-        ${useFilter ? `WHERE o.status = $1` : ``}
-        GROUP BY o.id
-        ORDER BY o.timestamp DESC
-      `;
+      FROM orders o
+      JOIN order_items oi ON o.id = oi.order_id
+      JOIN menu_items mi ON oi.item_id = mi.id
+      GROUP BY o.id
+      ORDER BY o.timestamp DESC
+    `;
 
-      const result = useFilter
-        ? await pool.query(query, [status]) 
-        : await pool.query(query);
-
-      res.json(result.rows);
+    const result = await pool.query(query);
+    console.log('Orders from database:', result.rows);
+    res.json(result.rows);
   } catch (error) {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -92,7 +89,7 @@ export const updateOrderStatus = async (req: Request, res: Response): Promise<vo
     return;
   }
 
-  const validStatuses = ["new", "preparing", "delivered"];
+  const validStatuses = ["active", "completed"];
 
   if (!validStatuses.includes(status)) {
     res.status(400).json({ error: "Invalid status" });
