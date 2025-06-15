@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 interface SessionContextType {
   umbrellaId: string | null;
@@ -7,6 +7,7 @@ interface SessionContextType {
   validateSession: () => boolean;
   setSession: (umbrellaId: string) => void;
   clearSession: () => void;
+  isInitialized: boolean;
 }
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
@@ -14,23 +15,38 @@ const SessionContext = createContext<SessionContextType | undefined>(undefined);
 export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [umbrellaId, setUmbrellaId] = useState<string | null>(null);
   const [sessionStart, setSessionStart] = useState<number | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const SESSION_DURATION = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
   const validateSession = () => {
-    if (!umbrellaId || !sessionStart) return false;
+    if (!isInitialized) return false;
+    if (!umbrellaId || !sessionStart) {
+      console.log('No session data:', { umbrellaId, sessionStart });
+      return false;
+    }
     const now = Date.now();
-    return now - sessionStart < SESSION_DURATION;
+    const isValid = now - sessionStart < SESSION_DURATION;
+    console.log('Session validation:', {
+      now,
+      sessionStart,
+      diff: now - sessionStart,
+      isValid
+    });
+    return isValid;
   };
 
   const setSession = (newUmbrellaId: string) => {
+    const timestamp = Date.now();
+    console.log('Setting session:', { newUmbrellaId, timestamp });
     setUmbrellaId(newUmbrellaId);
-    setSessionStart(Date.now());
+    setSessionStart(timestamp);
     sessionStorage.setItem('umbrellaId', newUmbrellaId);
-    sessionStorage.setItem('sessionStart', Date.now().toString());
+    sessionStorage.setItem('sessionStart', timestamp.toString());
   };
 
   const clearSession = () => {
+    console.log('Clearing session');
     setUmbrellaId(null);
     setSessionStart(null);
     sessionStorage.removeItem('umbrellaId');
@@ -42,19 +58,25 @@ export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const storedUmbrellaId = sessionStorage.getItem('umbrellaId');
     const storedSessionStart = sessionStorage.getItem('sessionStart');
     
+    console.log('Loading from storage:', { storedUmbrellaId, storedSessionStart });
+    
     if (storedUmbrellaId && storedSessionStart) {
       setUmbrellaId(storedUmbrellaId);
       setSessionStart(parseInt(storedSessionStart));
     }
+    setIsInitialized(true);
   }, []);
+
+  const isValid = useMemo(() => validateSession(), [umbrellaId, sessionStart, isInitialized]);
 
   const value = {
     umbrellaId,
     sessionStart,
-    isValid: validateSession(),
+    isValid,
     validateSession,
     setSession,
-    clearSession
+    clearSession,
+    isInitialized
   };
 
   return (

@@ -11,9 +11,13 @@ import { useSession } from "./context/SessionContext";
 
 // Protected route wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isValid } = useSession();
+  const { validateSession, isInitialized } = useSession();
   
-  if (!isValid) {
+  if (!isInitialized) {
+    return null; // or a loading spinner
+  }
+  
+  if (!validateSession()) {
     return <Navigate to="/scan-qr" replace />;
   }
   
