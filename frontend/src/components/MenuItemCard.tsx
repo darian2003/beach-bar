@@ -5,9 +5,11 @@ import type { CartItem } from "../context/CartContext";
 type Props = {
   item: {
     id: number;
-    name: string;
-    price: number;
-    description?: string;
+    nume: string;
+    pret_lei: number;
+    categorie: string;
+    cantitate_ml: number;
+    descriere: string;
   };
 };
 
@@ -17,8 +19,8 @@ const MenuItemCard: React.FC<Props> = ({ item }) => {
   const handleAdd = () => {
     const newItem: CartItem = {
       itemId: item.id,
-      name: item.name,
-      price: item.price,
+      name: item.nume,
+      price: item.pret_lei,
       quantity: 1,
     };
     addToCart(newItem);
@@ -26,10 +28,10 @@ const MenuItemCard: React.FC<Props> = ({ item }) => {
 
   return (
     <div className="bg-white shadow-md rounded-xl p-4 flex flex-col gap-2">
-      <h2 className="text-lg font-semibold">{item.name}</h2>
-      <p className="text-gray-600 text-sm">{item.description}</p>
+      <h2 className="text-lg font-semibold">{item.nume}</h2>
+      <p className="text-gray-600 text-sm">{item.descriere}</p>
       <div className="flex justify-between items-center mt-2">
-        <span className="text-blue-600 font-bold">{item.price} RON</span>
+        <span className="text-blue-600 font-bold">{item.pret_lei} RON</span>
         <button
           onClick={handleAdd}
           className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"

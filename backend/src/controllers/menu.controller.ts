@@ -5,7 +5,7 @@ export const getMenu = async (req: Request, res: Response): Promise<void> => {
   console.log("Fetching menu...");
   try {
     const result = await pool.query(
-      `SELECT id, name, price FROM menu_items ORDER BY name`
+      `SELECT id, nume, pret_lei, categorie, cantitate_ml, descriere FROM menu_items ORDER BY nume`
     );
     res.json(result.rows);
   } catch (error) {

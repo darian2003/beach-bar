@@ -16,7 +16,7 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Long Drinks', 'Long Island', 300, 40, 'Triplu Sec, Rom, Gin, Vodka, Tequila, Pepsi, Lamaie, Menta'),
 ('Long Drinks', 'Blue Lagoon', 300, 30, 'Sour Vodka, Suc Lamaie, Apa Minerala, Blue Curacao'),
 ('Long Drinks', 'Martini Royale', 250, 30, 'Martini, Prosecco, Lime, Menta'),
-('Long Drinks', 'Limoncello Spritz', 350, 30, 'Limoncello, Prosecco, Lime, Apa minerala');
+('Long Drinks', 'Limoncello Spritz', 350, 30, 'Limoncello, Prosecco, Lime, Apa minerala'),
 ('Beer', 'Tuborg Draught', 400, 14, NULL),
 ('Beer', 'Skol Draught', 400, 12, NULL),
 ('Beer', 'Bucur Draught', 400, 17, NULL),
@@ -29,7 +29,7 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Beer', 'Tuborg Doza', 500, 14, NULL),
 ('Beer', 'Skol Doza', 500, 12, NULL),
 ('Beer', 'Somersby', 330, 15, NULL),
-('Beer', 'Corona', 355, 20, NULL);
+('Beer', 'Corona', 355, 20, NULL),
 ('Wine', 'Purcari Sauvignon Blanc', 750, 90, NULL),
 ('Wine', 'Purcari Chardonnay', 750, 90, NULL),
 ('Wine', 'Purcari Rose de Purcari', 750, 90, NULL),
@@ -46,7 +46,7 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Wine', 'Averesti Sauvignon Demisec', 750, 80, NULL),
 ('Wine', 'Averesti Rose Demisec', 750, 80, NULL),
 ('Wine', 'Frizante Bianco', 200, 15, NULL),
-('Wine', 'Vin la pahar', 200, 15, NULL);
+('Wine', 'Vin la pahar', 200, 15, NULL),
 ('Spirits', 'Jack Daniels', 50, 20, NULL),
 ('Spirits', 'J&B', 50, 15, NULL),
 ('Spirits', 'Johny Walker Red', 50, 15, NULL),
@@ -62,7 +62,7 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Spirits', 'Cognac Jidvei', 50, 15, NULL),
 ('Spirits', 'Metaxa', 50, 15, NULL),
 ('Spirits', 'Martini Bianco', 50, 15, NULL),
-('Spirits', 'Campari', 50, 15, NULL);
+('Spirits', 'Campari', 50, 15, NULL),
 ('Bacardi Breezer','Bacardi Breezer', 285, 25, NULL),
 ('Virgin Cocktails', 'Green Apple', 300, 25, 'Lime, Suc Mere, Grenadine, Portocala'),
 ('Virgin Cocktails', 'Citrus Sunrise', 300, 25, 'Suc Portocale, Grenadine, Portocala'),
@@ -70,7 +70,7 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Virgin Cocktails', 'Limonada', 300, 20, 'Lamaie, Apa Plata, Menta, Zahar'),
 ('Virgin Cocktails', 'Limonada Fructata', 300, 25, 'Lamaie, Apa Plata, Zahar, Topping capsuni / mango'),
 ('Virgin Cocktails', 'Virgin Mojito', 300, 25, 'Lime, Menta, Apa Tonica, Zahar Brun'),
-('Virgin Cocktails', 'Gin Tonic N.A.', 300, 30, 'Gin N.A., Apa Tonica, Lime');
+('Virgin Cocktails', 'Gin Tonic N.A.', 300, 30, 'Gin N.A., Apa Tonica, Lime'),
 ('Coffee', 'Espresso', 30, 10, NULL),
 ('Coffee', 'Espresso Doppio', 60, 20, NULL),
 ('Coffee', 'Cappuccino', 200, 12, NULL),
@@ -78,7 +78,7 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Coffee', 'Flat White', 200, 20, 'Espresso dublu, spuma de lapte'),
 ('Coffee', 'Espresso Deco', 30, 10, NULL),
 ('Coffee', 'Cafe Frappe', 400, 23, 'Nescaffe, lapte, topping ciocolata, topping caramel, zahar, spray vegetal'),
-('Coffee', 'Cafe Frappe cu Inghetata', 400, 25, 'Nescaffe, lapte, topping ciocolata, topping caramel, inghetata, zahar, spray vegetal');
+('Coffee', 'Cafe Frappe cu Inghetata', 400, 25, 'Nescaffe, lapte, topping ciocolata, topping caramel, inghetata, zahar, spray vegetal'),
 ('Soft Drinks', 'Cola', 500, 14, NULL),
 ('Soft Drinks', 'Fanta', 500, 14, NULL),
 ('Soft Drinks', 'Sprite', 500, 14, NULL),
@@ -98,5 +98,5 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Soft Drinks', 'Apa plata Bucovina', 750, 15, NULL),
 ('Soft Drinks', 'Apa minerala Bucovina', 500, 10, NULL),
 ('Soft Drinks', 'Apa minerala Bucovina', 750, 15, NULL),
-('Soft Drinks', 'Apa Tymbark Fructata', 500, 12, NULL);
-ON CONFLICT (name) DO NOTHING;
+('Soft Drinks', 'Apa Tymbark Fructata', 500, 12, NULL),
+ON CONFLICT (nume) DO NOTHING;

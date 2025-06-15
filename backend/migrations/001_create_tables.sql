@@ -1,8 +1,8 @@
 -- Create menu items
 CREATE TABLE IF NOT EXISTS menu_items (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id SERIAL PRIMARY KEY,
     categorie VARCHAR(50),
-    nume VARCHAR(100),
+    nume VARCHAR(100) UNIQUE,
     cantitate_ml INT,
     pret_lei INT,
     descriere TEXT

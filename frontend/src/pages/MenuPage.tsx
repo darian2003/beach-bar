@@ -5,8 +5,11 @@ import { ShoppingCart } from "lucide-react";
 
 interface MenuItem {
   id: number;
-  name: string;
-  price: number;
+  nume: string;
+  pret_lei: number;
+  categorie: string;
+  cantitate_ml: number;
+  descriere: string;
 }
 
 const MenuPage: React.FC = () => {
