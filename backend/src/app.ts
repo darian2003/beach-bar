@@ -5,6 +5,7 @@ import cors from "cors";
 // Import routes (update file extensions if needed)
 import orderRoutes from "./routes/order.routes";
 import menuRoutes from "./routes/menu.routes";
+import tokenRoutes from "./routes/tokenRoutes";
 
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
@@ -16,6 +17,7 @@ app.use(express.json());
 // Routes
 app.use("/api/orders", orderRoutes);
 app.use("/api/menu", menuRoutes);
+app.use("/api", tokenRoutes);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("🌴 Beach Bar API Running");
