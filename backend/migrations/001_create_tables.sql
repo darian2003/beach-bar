@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS menu_items (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL UNIQUE,
-  price NUMERIC(6, 2) NOT NULL
+  price NUMERIC(6, 2) NOT NULL,
 );
 
 -- Create orders

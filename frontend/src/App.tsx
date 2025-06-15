@@ -7,13 +7,13 @@ import { CartProvider } from "./context/CartContext";
 function App() {
   return (
     <CartProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MenuPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/bar" element={<BarDashboard />} /> 
-        </Routes>
-      </Router>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MenuPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/bar" element={<BarDashboard />} /> 
+          </Routes>
+        </Router>
     </CartProvider>
   );
 }
