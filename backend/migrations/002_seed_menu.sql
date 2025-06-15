@@ -98,5 +98,5 @@ INSERT INTO menu_items (categorie, nume,cantitate_ml,pret_lei,descriere) VALUES
 ('Soft Drinks', 'Apa plata Bucovina', 750, 15, NULL),
 ('Soft Drinks', 'Apa minerala Bucovina', 500, 10, NULL),
 ('Soft Drinks', 'Apa minerala Bucovina', 750, 15, NULL),
-('Soft Drinks', 'Apa Tymbark Fructata', 500, 12, NULL),
+('Soft Drinks', 'Apa Tymbark Fructata', 500, 12, NULL)
 ON CONFLICT (nume) DO NOTHING;

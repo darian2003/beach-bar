@@ -8,6 +8,8 @@ export const getMenu = async (req: Request, res: Response): Promise<void> => {
       `SELECT id, nume, pret_lei, categorie, cantitate_ml, descriere FROM menu_items ORDER BY nume`
     );
     res.json(result.rows);
+    console.log(result.rows);
+    console.log(result.rows.length);
   } catch (error) {
     console.error("Menu fetch error:", error);
     res.status(500).json({ error: "Internal server error" });
